@@ -18,6 +18,7 @@ import ForgotPassword from './components/user/ForgotPassword';
 import NewPassword from './components/user/NewPassword';
 import ConfirmOrder from './components/cart/ConfirmOrder';
 import Payment from "./components/cart/Payment";
+import { useSelector } from 'react-redux';
 
 
 //payment
@@ -30,20 +31,52 @@ import OrderDetails from './components/order/OrderDetails';
 
 
 
+// function App() {
+
+//   const [stripeApiKey,setStripeApiKey]=useState("");
+
+//   const 
+ 
+//   useEffect(()=>{
+//     store.dispatch(loadUser());
+//     async function getStripeApiKey(){
+//       const {data}=await axios.get("/api/v1/stripeapi");
+//       setStripeApiKey(data.stripeApiKey);
+
+//     }
+
+//     getStripeApiKey();
+//   },[]);
+
+
+
+
+
+
 function App() {
 
-  const [stripeApiKey,setStripeApiKey]=useState("");
- 
-  useEffect(()=>{
+  const [stripeApiKey, setStripeApiKey] = useState("");
+  const { isAuthenticated } = useSelector((state) => state.auth);
+
+// dispatched exactly once when the component is first rendered , and check if user is Authenticated
+  useEffect(() => {
     store.dispatch(loadUser());
-    async function getStripeApiKey(){
-      const {data}=await axios.get("/api/v1/stripeapi");
-      setStripeApiKey(data.stripeApiKey);
+  }, []);
 
+// this useEffect will trigger when isAuthenticated variable changes
+  useEffect(() => {
+    async function getStripeApiKey() {
+      try {
+        const { data } = await axios.get("/api/v1/stripeapi");
+        setStripeApiKey(data.stripeApiKey);
+      } catch (error) {
+        console.error("Error fetching Stripe API key:", error);
+      }
     }
-
-    getStripeApiKey();
-  },[]);
+    if (isAuthenticated) {
+      getStripeApiKey();
+    }
+  }, [isAuthenticated]);
   
      
     return ( 
@@ -108,3 +141,5 @@ function App() {
   }
 
 export default App;
+
+

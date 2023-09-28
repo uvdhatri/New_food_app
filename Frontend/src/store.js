@@ -7,18 +7,17 @@ import { cartReducer } from "./reducers/cartReducer";
 import { authReducer, forgotPasswordReducer, userReducer } from "./reducers/userReducer";
 import { myOrdersReducer, newOrderReducer, orderDetailsReducer } from "./reducers/orderReducers";
 
-const reducer=combineReducers({
-    restaurants:restaurantReducer,
-    menus:menuReducer,
-    cart:cartReducer,
-    auth:authReducer,
-    user:userReducer,
-    forgotPassword:forgotPasswordReducer,
-    newOrder:newOrderReducer,
-    myOrder:myOrdersReducer,
-    orderDetails:orderDetailsReducer,
-});
-
+const reducer = combineReducers({
+    restaurants: restaurantReducer,
+    menus: menuReducer,
+    cart: cartReducer,
+    auth: authReducer,
+    user: userReducer,
+    forgotPassword: forgotPasswordReducer,
+    newOrder: newOrderReducer,
+    myOrders: myOrdersReducer,
+    orderDetails: orderDetailsReducer,
+    });
 let initailState={
     cart:{
         cartItems:localStorage.getItem("cartItems")
